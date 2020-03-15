@@ -1,13 +1,37 @@
 import platform
-import webcam_capture as web_cap
+from webcam_capture import WebcamCapture
+from webcam_show import WebcamShow
+#from picam_capture import PicamCapture
 import cv2
 import terminate as trm
-import keyboard
 #import picam_capture as pi_cap
 
-def main():
+def webcamThread(source=0):
+    """
+    Dedicated thread for grabbing video frames with VideoGet object.
+    Dedicated thread for showing video frames with VideoShow object.
+    Main thread serves only to pass frames between VideoGet and
+    VideoShow objects/threads.
+    """
 
+    video_getter = WebcamCapture(source).start()
+    video_shower = WebcamShow(video_getter.frame).start()
+    
+
+    while True:
+        if video_getter.stopped or video_shower.stopped:
+            video_shower.stop()
+            video_getter.stop()
+            break
+
+        frame = video_getter.frame
+        
+        video_shower.frame = frame
+
+def main():
+    
     if(platform.system() == "Linux"):
+    
         picamState = input("Are you using a Pi Camera? y/n")
 
         if(picamState == "y"):
@@ -15,21 +39,13 @@ def main():
             
         elif(picamState == "n"):
             print("Configuring as USB/IP Camera...")
-            web_cap.WebcamCapture().start(300,300)
+            webcamThread()
         else:
             print("Please type y or n")
     else:
         print("Configuring as USB/IP Camera...")
-        web_cap.WebcamCapture().start(300,300)
-    
-    while True:
-        if keyboard.read_key() == "q":
-            print("hello")
-            print(trm.Terminate.status)
-            trm.Terminate.status = True
-
-        if trm.Terminate.status == True:
-            web_cap.WebcamCapture().stop()
-
+        webcamThread()
+        
+        
 if __name__ == "__main__":
     main()
