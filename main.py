@@ -4,6 +4,7 @@ from webcam_show import WebcamShow
 #from picam_capture import PicamCapture
 import cv2
 import terminate as trm
+from trackbar import Trackbar
 #import picam_capture as pi_cap
 
 def webcamThread(source=0):
@@ -16,6 +17,7 @@ def webcamThread(source=0):
 
     video_getter = WebcamCapture(source).start()
     video_shower = WebcamShow(video_getter.frame).start()
+    
     
 
     while True:
@@ -44,7 +46,9 @@ def main():
             print("Please type y or n")
     else:
         print("Configuring as USB/IP Camera...")
+        Trackbar().start()
         webcamThread()
+        
         
         
 if __name__ == "__main__":
