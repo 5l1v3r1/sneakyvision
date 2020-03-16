@@ -16,16 +16,16 @@ class WebcamCapture:
 
     def __init__(self, src=0):
         self.fps = 60
-        self.width = 320
-        self.height = 240
-        self.brightness = 0
-        self.contrast = 0
-        self.saturation = 0
+        self.width = 640
+        self.height = 480
+        self.brightness = 30
+        self.contrast = 50
+        self.saturation = 50
         # add gain here too
-        self.exposure = 0
-
+        self.exposure = 50
 
         self.stream = cv2.VideoCapture(src)
+        """
         self.stream.set(cv2.CAP_PROP_FPS, self.fps)
         self.stream.set(cv2.CAP_PROP_FRAME_WIDTH, self.width)
         self.stream.set(cv2.CAP_PROP_FRAME_HEIGHT, self.height)
@@ -34,7 +34,7 @@ class WebcamCapture:
         self.stream.set(cv2.CAP_PROP_SATURATION, self.saturation)
         # TODO: Add gain if its ps3eye
         self.stream.set(cv2.CAP_PROP_EXPOSURE, self.exposure)
-
+        """
 
         (self.grabbed, self.frame) = self.stream.read()
         self.stopped = False
@@ -50,6 +50,7 @@ class WebcamCapture:
             else:
                 print("FPS : ", self.stream.get(cv2.CAP_PROP_FPS))
                 print("BRIGHTNESS : ", self.stream.get(cv2.CAP_PROP_BRIGHTNESS))
+                # print("")
                 (self.grabbed, self.frame) = self.stream.read()
 
     def stop(self):

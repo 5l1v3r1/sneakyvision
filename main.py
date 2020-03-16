@@ -30,6 +30,9 @@ def webcamThread(source=0):
         
         video_shower.frame = frame
 
+def nothing():
+    pass
+
 def main():
     
     if(platform.system() == "Linux"):
@@ -46,10 +49,17 @@ def main():
             print("Please type y or n")
     else:
         print("Configuring as USB/IP Camera...")
-        Trackbar().start()
+        trackbars = Trackbar()
+        trackbars.createTrackbars()
+
+        """
+        cv2.createTrackbar(self.height, self.wnd, 0,  255, nothing)
+        cv2.createTrackbar(self.brightness, self.wnd, 0,  255, nothing)
+        cv2.createTrackbar(self.contrast, self.wnd, 0,   255, nothing)
+        cv2.createTrackbar(self.saturation, self.wnd, 0,  255, nothing)
+        """
+
         webcamThread()
-        
-        
         
 if __name__ == "__main__":
     main()

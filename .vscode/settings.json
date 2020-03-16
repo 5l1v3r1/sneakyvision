@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "C:\\Users\\emrec\\AppData\\Local\\Programs\\Python\\Python37\\python.exe",
+    "python.pythonPath": "C:\\Users\\tezer\\Anaconda3\\envs\\cv2\\python.exe",
     "python.linting.enabled": false,
     "python.formatting.provider": "black",
     
